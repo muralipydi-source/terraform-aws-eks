@@ -50,8 +50,8 @@ module "eks" {
     # }
     green = {
       # Starting on 1.30, AL2023 is the default AMI type for EKS managed node groups
-      ami_type       = "AL2023_x86_64_STANDARD" # user name is ec2-user
-      instance_types = ["m5.xlarge"]
+      ami_type       = "AL2023_x86_64_STANDARD" # user name is ec2-user "AL2023_x86_64_STANDARD"
+      instance_types = ["m7i-flex.large"] #["m5.xlarge"]
       
       min_size     = 2
       max_size     = 10

@@ -3,17 +3,37 @@ data "aws_ami" "joindevops" {
   most_recent      = true
 
   filter {
-    name   = "name"
+    name   = "AMI ID"
+    values = ["ami-09c813fb71547fc4f"]
+  }
+
+  filter {
+    name   = "AMI name"
     values = ["RHEL-9-DevOps-Practice"]
   }
 
   filter {
-    name   = "root-device-type"
+    name   = "Platform details"
+    values = ["Red Hat Enterprise Linux"]
+  }
+
+  filter {
+    name   = "Image type"
+    values = ["machine"]
+  }
+
+  filter {
+    name   = "Architecture"
+    values = ["x86_64"]
+  }
+
+  filter {
+    name   = "Root device type"
     values = ["ebs"]
   }
 
   filter {
-    name   = "virtualization-type"
+    name   = "Virtualization type"
     values = ["hvm"]
   }
 }
