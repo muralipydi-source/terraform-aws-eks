@@ -1,4 +1,4 @@
-data "aws_ami" "joindevops" {
+/* data "aws_ami" "joindevops" {
   owners           = ["973714476881"]
   most_recent      = true
 
@@ -36,7 +36,7 @@ data "aws_ami" "joindevops" {
     name   = "Virtualization type"
     values = ["hvm"]
   }
-}
+} */
 
 data "aws_ssm_parameter" "bastion_sg_id" {
   name = "/${var.project}/${var.environment}/bastion_sg_id"
