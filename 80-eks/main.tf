@@ -41,7 +41,7 @@ module "eks" {
       
       min_size     = 2
       max_size     = 10
-      desired_size = 2
+      desired_size = 3
     } */
     # iam_role_additional_policies = {
     #     AmazonEBS = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
