@@ -1,11 +1,51 @@
+# resource "aws_acm_certificate" "muraliitemp" {
+#   domain_name       = "*.${var.zone_name}"
+#   validation_method = "DNS"
+
+#   tags = merge(
+#     local.common_tags,
+#     {
+#         Name = "${var.project}-${var.environment}"
+#     }
+#   )
+
+#   lifecycle {
+#     create_before_destroy = true
+#   }
+# }
+
+# resource "aws_route53_record" "muraliitemp" {
+#   for_each = {
+#     for dvo in aws_acm_certificate.muraliitemp.domain_validation_options : dvo.domain_name => {
+#       name   = dvo.resource_record_name
+#       record = dvo.resource_record_value
+#       type   = dvo.resource_record_type
+#     }
+#   }
+
+#   allow_overwrite = true
+#   name            = each.value.name
+#   records         = [each.value.record]
+#   ttl             = 60
+#   type            = each.value.type
+#   zone_id         = var.zone_id
+# }
+
+# resource "aws_acm_certificate_validation" "muraliitemp" {
+#   certificate_arn         = aws_acm_certificate.muraliitemp.arn
+#   validation_record_fqdns = [for record in aws_route53_record.muraliitemp : record.fqdn]
+# }
+
+
 resource "aws_acm_certificate" "muraliitemp" {
-  domain_name       = "*.${var.zone_name}"
-  validation_method = "DNS"
+  domain_name               = var.zone_name
+  subject_alternative_names = ["*.${var.zone_name}"]
+  validation_method         = "DNS"
 
   tags = merge(
     local.common_tags,
     {
-        Name = "${var.project}-${var.environment}"
+      Name = "${var.project}-${var.environment}"
     }
   )
 
@@ -14,9 +54,11 @@ resource "aws_acm_certificate" "muraliitemp" {
   }
 }
 
+# DNS validation records
 resource "aws_route53_record" "muraliitemp" {
   for_each = {
-    for dvo in aws_acm_certificate.muraliitemp.domain_validation_options : dvo.domain_name => {
+    for dvo in aws_acm_certificate.muraliitemp.domain_validation_options :
+    dvo.domain_name => {
       name   = dvo.resource_record_name
       record = dvo.resource_record_value
       type   = dvo.resource_record_type
@@ -31,7 +73,13 @@ resource "aws_route53_record" "muraliitemp" {
   zone_id         = var.zone_id
 }
 
+# Validation resource
 resource "aws_acm_certificate_validation" "muraliitemp" {
-  certificate_arn         = aws_acm_certificate.muraliitemp.arn
-  validation_record_fqdns = [for record in aws_route53_record.muraliitemp : record.fqdn]
+  certificate_arn = aws_acm_certificate.muraliitemp.arn
+
+  validation_record_fqdns = [
+    for record in aws_route53_record.muraliitemp : record.fqdn
+  ]
+
+  depends_on = [aws_route53_record.muraliitemp] # ✅ ensures DNS created first
 }
