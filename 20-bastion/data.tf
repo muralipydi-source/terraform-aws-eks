@@ -1,15 +1,15 @@
-/* data "aws_ami" "joindevops" {
+data "aws_ami" "joindevops" {
   owners           = ["973714476881"]
   most_recent      = true
 
   filter {
     name   = "AMI ID"
-    values = ["ami-09c813fb71547fc4f"]
+    values = ["ami-0220d79f3f480ecf5"]
   }
 
   filter {
     name   = "AMI name"
-    values = ["RHEL-9-DevOps-Practice"]
+    values = ["Redhat-9-DevOps-Practice"]
   }
 
   filter {
@@ -36,7 +36,7 @@
     name   = "Virtualization type"
     values = ["hvm"]
   }
-} */
+} 
 
 data "aws_ssm_parameter" "bastion_sg_id" {
   name = "/${var.project}/${var.environment}/bastion_sg_id"
