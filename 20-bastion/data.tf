@@ -23,7 +23,7 @@ data "aws_ami" "joindevops" {
   }
 
   filter {
-    name   = "Architecture"
+    name   = "architecture"
     values = ["x86_64"]
   }
 
