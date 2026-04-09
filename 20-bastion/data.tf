@@ -1,24 +1,24 @@
 data "aws_ami" "joindevops" {
-  owners           = ["973714476881"]
-  most_recent      = true
+  owners      = ["973714476881"]
+  most_recent = true
 
   filter {
-    name   = "AMI ID"
+    name   = "image-id"
     values = ["ami-0220d79f3f480ecf5"]
   }
 
   filter {
-    name   = "AMI name"
+    name   = "name"
     values = ["Redhat-9-DevOps-Practice"]
   }
 
   filter {
-    name   = "Platform details"
+    name   = "platform-details"
     values = ["Red Hat Enterprise Linux"]
   }
 
   filter {
-    name   = "Image type"
+    name   = "image-type"
     values = ["machine"]
   }
 
@@ -28,15 +28,15 @@ data "aws_ami" "joindevops" {
   }
 
   filter {
-    name   = "Root device type"
+    name   = "root-device-type"
     values = ["ebs"]
   }
 
   filter {
-    name   = "Virtualization type"
+    name   = "virtualization-type"
     values = ["hvm"]
   }
-} 
+}
 
 data "aws_ssm_parameter" "bastion_sg_id" {
   name = "/${var.project}/${var.environment}/bastion_sg_id"
